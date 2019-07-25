@@ -1,0 +1,51 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  elk-web:
+    build: https://github.com/wko/elk-web-reasoner.git
+    volumes:
+      - ./data/snomed.ofn:/root/data/ontologies/snomed.ofn
+      - ~/.ivy2/local:/root/.ivy2/local
+    ports:
+      - "8080:8080"
+    environment:
+      - ONTOLOGY_PATH=/root/data/ontologies/snomed.ofn
+      - _JAVA_OPTIONS=-Xmx4g -XX:-UseGCOverheadLimit
+      - DB_USER=postgres 
+      - DB_PASSWORD=
+      - DB_HOST=db
+      - DB_PORT=5432
+    depends_on:
+      - db
+  stanford_nlp:
+    image: nlpbox/corenlp
+    command: java -mx3g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000 -timeout 15000 -preload tokenize,ssplit,pos,depparse
+    ports:
+      - "9000:9000"
+    restart: always
+    
+  #metamap:
+  #  image: metamap 
+  #  #command: /root/bin/run.sh
+  #  ports:
+  #    - "80:80"  
+  translator:
+    build: .
+    volumes:
+      - ./baseline:/myapp
+      - ./data:/data
+    command: tail -f /dev/null
+    environment:
+      - STANFORD_NLP_TOOLS=http://stanford_nlp:9000/
+      - REASONER_DOCKER_URL=http://host.docker.internal:8080/
+    depends_on:
+      - elk
+      - stanford_nlp
+    #  - metamap
+      
+      

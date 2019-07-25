@@ -1,0 +1,70 @@
+14640
+platelet count ≥ 100 x 109/l 
+platelet count ≥ 100 x 109/l
+['platelet count  100 x 109/l']
+{'platelet count  100 x 109/l': {'277200003': 'Platelets/liter '}}
+{}
+
+33570
+>= 1 prescription claim for any medication in the pre- and post-index period 
+>= 1 prescription claim for any medication in the pre- and post-index period
+['= 1 prescription claim for any medication', 'in the pre', 'post index period']
+{'= 1 prescription claim for any medication': {'451231000124103': 'greater than one', '182817000': 'Drug prescription '}, 'in the pre': {'236874000': 'Status pre- ', '288556008': 'before', '272113006': 'Before values '}, 'post index period': {'288563008': 'After values ', '419205000': '% index ', '259037005': 'per period ', '272117007': 'Time periods '}}
+{'= 1 prescription claim for any medication': {'182817000': ('situation with explicit context', 'Drug prescription ', ['129125009'])}, 'in the pre': {'272113006': ('qualifier value', 'Before values ', ['272099008'])}, 'post index period': {'288563008': ('qualifier value', 'After values ', ['272099008']), '272117007': ('qualifier value', 'Time periods ', ['272099008'])}}
+
+39119
+healthy adult volunteers, man or woman, ages between 20 and 40 years
+healthy adult volunteers, man or woman, ,
+['healthy adult volunteers,', 'man', 'woman,']
+{'healthy adult volunteers,': {'102512003': 'Well adult ', '160772005': 'Voluntary worker ', '276035002': 'Voluntary helper ', '276037005': 'Volunteer helper '}, 'man': {'339947000': 'Man ', '278412004': 'Human - origin ', '337915000': 'Homo sapiens ', '10052007': 'Male structure ', '248153007': 'Male '}, 'woman,': {'224526002': 'Woman '}}
+{'healthy adult volunteers,': {'102512003': ('clinical finding', 'Well adult ', ['250171008'])}, 'man': {'339947000': ('person', 'Man ', ['410598002', '133936004']), '278412004': ('qualifier value', 'Human - origin ', ['272099008']), '248153007': ('clinical finding', 'Male ', ['365860008'])}, 'woman,': {'224526002': ('person', 'Woman ', ['410598002', '133936004'])}}
+
+3420
+cardiac arrhythmias requiring anti-arrhythmic therapy other than beta blockers or digoxin.
+cardiac arrhythmias requiring anti-arrhythmic therapy other than beta blockers or digoxin.
+['cardiac arrhythmias', 'anti arrhythmic therapy other than beta blockers', 'digoxin']
+{'cardiac arrhythmias': {'698247007': 'Cardiac arrhythmia '}, 'anti arrhythmic therapy other than beta blockers': {'372813008': 'Antiarrhythmic agent ', '67507000': 'Antiarrhythmic drug ', '276239002': 'Therapy ', '277132007': 'Therapeutic procedure ', '33252009': 'beta-Blocking agent ', '373254001': 'beta-Blocking agent '}, 'digoxin': {'387461009': 'Digoxin ', '796001': 'Digoxin '}}
+{'cardiac arrhythmias': {'698247007': ('clinical finding', 'Cardiac arrhythmia ', ['118234003', '64572001'])}, 'anti arrhythmic therapy other than beta blockers': {'276239002': ('procedure', 'Therapy ', ['243120004', '362961001', '277132007']), '277132007': ('procedure', 'Therapeutic procedure ', ['362961001']), '373254001': ('product', 'beta-Blocking agent ', ['406455002'])}, 'digoxin': {'387461009': ('product', 'Digoxin ', ['372813008', '312413002', '406455002'])}}
+
+6941
+diabetes mellitus
+diabetes mellitus
+['diabetes mellitus']
+{'diabetes mellitus': {'73211009': 'Diabetes mellitus '}}
+{'diabetes mellitus': {'73211009': ('clinical finding', 'Diabetes mellitus ', ['118234003', '64572001'])}}
+
+13702
+a primary active mental illness diagnosis other than schizoaffective disorder
+a primary active mental illness diagnosis other than schizoaffective disorder
+['a primary active mental illness diagnosis other than schizoaffective disorder']
+{'a primary active mental illness diagnosis other than schizoaffective disorder': {'8319008': 'Principal diagnosis ', '55561003': 'Active ', '74732009': 'Mental disorder ', '191567000': 'Schizoaffective schizophrenia ', '68890003': 'Schizoaffective disorder '}}
+{'a primary active mental illness diagnosis other than schizoaffective disorder': {'55561003': ('qualifier value', 'Active ', ['272099008']), '74732009': ('clinical finding', 'Mental disorder ', ['64572001']), '191567000': ('clinical finding', 'Schizoaffective schizophrenia ', ['68890003', '64572001', '74732009']), '68890003': ('clinical finding', 'Schizoaffective disorder ', ['64572001', '74732009'])}}
+
+22403
+too large to fit in the magnet 
+too large to fit in the magnet
+['too large', 'to', 'fit in the magnet']
+{'too large': {'255509001': 'Large '}, 'to': {'223570002': 'Togo ', '9986007': 'Tryptophanase '}, 'fit in the magnet': {'91175000': 'Seizure ', '44396004': 'Magnet, device '}}
+{'too large': {'255509001': ('qualifier value', 'Large ', ['272099008'])}, 'to': {'9986007': ('product', 'Tryptophanase ', ['115668003', '312413002'])}, 'fit in the magnet': {'91175000': ('clinical finding', 'Seizure ', ['102957003', '118234003'])}}
+
+24263
+has known hypersensitivity to pembrolizumab and/or epacadostat or any of their excipients
+has known hypersensitivity to pembrolizumab and/or epacadostat or any of their excipients
+['known hypersensitivity to pembrolizumab', 'any of their excipients']
+{'known hypersensitivity to pembrolizumab': {'36692007': 'Known ', '418634005': 'Allergic reaction caused by substance ', '421961002': 'Hypersensitivity reaction ', '716125002': 'Pembrolizumab ', '421369008': 'Emotional hypersensitivity '}, 'any of their excipients': {'360215002': 'Pharmaceutical excipient ', '43747001': 'Drug excipient '}}
+{'known hypersensitivity to pembrolizumab': {'418634005': ('clinical finding', 'Allergic reaction caused by substance ', ['64572001', '473010000', '421961002']), '421961002': ('clinical finding', 'Hypersensitivity reaction ', ['64572001', '473010000']), '716125002': ('product', 'Pembrolizumab ', ['115668003', '312413002']), '421369008': ('clinical finding', 'Emotional hypersensitivity ', ['250171008'])}, 'any of their excipients': {'360215002': ('product', 'Pharmaceutical excipient ', ['312412007'])}}
+
+29709
+history of solid organ transplantation or collagen vascular disease
+, solid organ transplantation or collagen vascular disease
+['solid organ transplantation', 'collagen vascular disease']
+{'solid organ transplantation': {'256885008': 'Solid organ ', '129406001': 'Transplantation - action ', '263903005': 'Transplant ', '77465005': 'Transplantation '}, 'collagen vascular disease': {'81573002': 'Collagen disease '}}
+{'solid organ transplantation': {'256885008': ('qualifier value', 'Solid organ ', ['272099008']), '263903005': ('qualifier value', 'Transplant ', ['272099008']), '77465005': ('procedure', 'Transplantation ', ['128927009'])}, 'collagen vascular disease': {'81573002': ('clinical finding', 'Collagen disease ', ['118234003', '64572001'])}}
+
+39217
+facial trauma or burns that might interfere with the esophageal catheter placement
+facial trauma or burns
+['facial trauma', 'burns']
+{'facial trauma': {'125593007': 'Injury of face '}, 'burns': {'125666000': 'Burn ', '48333001': 'Burn injury '}}
+{'facial trauma': {'125593007': ('clinical finding', 'Injury of face ', ['118234003', '64572001'])}, 'burns': {'125666000': ('clinical finding', 'Burn ', ['64572001'])}}
+

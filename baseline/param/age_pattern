@@ -1,0 +1,5 @@
+{'age_interval_pattern':['age(.*) between (\d*) and (\d*) year(.?)', 'age(.?) (\d*)(\s?)\-(\s?)(\d*)( years|(.*?))', '(\d+)(.*)-(.*)((\d+)*) year(.?) of age(.?)', 'between(.*)age(.*)of (\d*) and (\d*)', 'age(.*) (<|>|>=|≥|<=)(\s*)(\d*) and (<|>|>=|≥|<=)(\s*)(\d*)( years|'')', '(\d*) to (\d*) years of age'],
+
+'age_upper_pattern':['age(.?)(\s*)(<=|≤|<)(\s*)(\d*)( years|'')', 'under (\d*) year(.?)( old|'')', '(<=|≤|<|under) (\d*) year(.*) of age(.?)', 'age(.?) (<=|≤|<) (\d*) (year().?)*', 'age(.?) (\d*) or younger'],
+
+'age_lower_pattern':['age(.?)(\s*)(>=|≥|>)(\s*)(\d*)( years|'')', 'above (\d*) year(.?)( old|'')', '(>=|≥|>) (\d*) year(.*) of age(.?)', 'age(.?) (>=|≥|>) (\d*)( year(.?))*', 'age(.?) (\d*) or older', 'older than (\d*) years of age', 'over (\d*) years of age']}

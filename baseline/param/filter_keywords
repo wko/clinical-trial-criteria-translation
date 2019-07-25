@@ -1,0 +1,5 @@
+{
+'subjective_keywords': ['self-report', 'consent','willingness','willing to', 'want to', 'wants to', 'interested in', 'in the opinion of', 'agree to', 'able to', 'unable to', 'ability to', 'inability to'],
+'non_history_keywords' : ['recent', 'current', 'currently'],
+'future_tense_sign' : ['will', 'shall', 'are going to', 'is going to', 'am going to']
+}

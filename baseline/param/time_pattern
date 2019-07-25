@@ -1,0 +1,14 @@
+{
+
+  'time_day_pattern':['within (.*?)(\d+) day(.?)', 'in the past (\d+?|.*)(\s?)day(.?)', 'less than (\d+) day(.?)'],
+
+  'time_week_pattern':['within (.*?)(\d+) week(.?)', 'in the past (\d+?|.*)(\s?)week(.?)', 'less than (\d+) week(.?)'],
+
+  'time_month_pattern':['within (.*?)(\d+) month(.?)', 'in the past (\d+?|.*)(\s?)month(.?)', 'less than (\d+) month(.?)', 'within the previous month', 'last (\d*) month(.?)', 'within the previous month', 'for (at least)* (\d*) months', 'for (>=|<=|>|<)* (\d*) months', 'duration (at least)* (\d*) months', 'duration (>=|<=|>|<)* (\d*) month(.?)' , 'for (more than)* (\d*) month(.?)'],
+
+  'time_year_pattern':['within (.*?)(\d+) year(.?)', 'in the past (\d+?|.*)(\s?)year(.?)', 'less than (\d+) year(.?)'],
+
+  'time_past_pattern':['(a|any|prior|previous) history of', 'history of', 'previous', 'prior episode of']
+
+
+ }

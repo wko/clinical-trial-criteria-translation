@@ -1,0 +1,122 @@
+cws inclusion
+platelet count ≥ 100 x 109/l 
+age information: []
+time information: []
+original mapping information: {}
+refined mapping information: []
+annotated pclxs list: [['platelet count ', 'platelet count ', 'no match', '', (0, 14)], ['≥', '≥', 'comparison sign', '≥', (15, 15)], ['100', '100', 'number sign', '100', (17, 19)], ['x', 'x', 'no match', '', (20, 22)], ['109', '109', 'number sign', '109', (23, 25)], ['/l ', '/l ', 'no match', '', (26, 28)]]
+annotated pclxs list after removing repeating concepts: [['platelet count ', 'platelet count ', 'no match', '', (0, 14)], ['≥', '≥', 'comparison sign', '≥', (15, 15)], ['100', '100', 'number sign', '100', (17, 19)], ['x', 'x', 'no match', '', (20, 22)], ['109', '109', 'number sign', '109', (23, 25)], ['/l ', '/l ', 'no match', '', (26, 28)]]
+annotated criterion: platelet count (no match) ≥(comparison sign) 100(number sign) x(no match) 109(number sign) /l (no match)
+
+accuracy: False,Normal,0.43
+
+cws inclusion
+>= 1 prescription claim for any medication in the pre- and post-index period 
+age information: []
+time information: []
+original mapping information: {'= 1 prescription claim for any medication': {'182817000': ('situation with explicit context', 'drug prescription ', ['129125009'])}, 'in the pre': {'272113006': ('qualifier value', 'before values ', ['272099008'])}, 'post index period': {'288563008': ('qualifier value', 'after values ', ['272099008']), '272117007': ('qualifier value', 'time periods ', ['272099008'])}}
+refined mapping information: [['prescription', 'drug prescription', 'situation with explicit context', '182817000'], ['pre', 'before values', 'qualifier value', '272113006'], ['post index period', 'time periods', 'qualifier value', '272117007']]
+annotated pclxs list: [['>=', '>=', 'comparison sign', '>=', (0, 1)], ['1', '1', 'number sign', '1', (3, 3)], ['prescription', 'drug prescription', 'situation with explicit context', '182817000', (5, 16)], ['claim for any medication in the', 'claim for any medication in the', 'no match', '', (17, 50)], ['pre', 'before values', 'qualifier value', '272113006', (51, 53)], ['and', '||', 'or', 'and', (55, 57)], ['post index period', 'time periods', 'qualifier value', '272117007', (61, 77)]]
+annotated pclxs list after removing repeating concepts: [['>=', '>=', 'comparison sign', '>=', (0, 1)], ['1', '1', 'number sign', '1', (3, 3)], ['prescription', 'drug prescription', 'situation with explicit context', '182817000', (5, 16)], ['claim for any medication in the', 'claim for any medication in the', 'no match', '', (17, 50)], ['pre', 'before values', 'qualifier value', '272113006', (51, 53)], ['and', '||', 'or', 'and', (55, 57)], ['post index period', 'time periods', 'qualifier value', '272117007', (61, 77)]]
+annotated criterion: >=(comparison sign) 1(number sign) prescription(situation with explicit context) claim for any medication in the(no match) pre(qualifier value) and(or) post index period(qualifier value)
+
+accuracy: False,Normal,0.78
+
+cws inclusion
+healthy adult volunteers, man or woman, ages between 20 and 40 years
+age information: [['ages between 20 and 40 years', 'ages between 20 and 40 years', 'age', {'age_upper_limit': '40', 'age_lower_limit': '20'}, (40, 67)]]
+time information: []
+original mapping information: {'healthy adult volunteers,': {'102512003': ('clinical finding', 'well adult ', ['250171008'])}, 'man': {'339947000': ('person', 'man ', ['410598002', '133936004']), '278412004': ('qualifier value', 'human - origin ', ['272099008']), '248153007': ('clinical finding', 'male ', ['365860008'])}, 'woman,': {'224526002': ('person', 'woman ', ['410598002', '133936004'])}}
+refined mapping information: [['adult', 'well adult', 'clinical finding', '102512003'], ['man', 'man', 'person', '339947000'], ['woman', 'woman', 'person', '224526002']]
+annotated pclxs list: [['healthy ', 'healthy ', 'no match', '', (0, 7)], ['adult', 'well adult', 'clinical finding', '102512003', (8, 12)], ['volunteers', 'volunteers', 'no match', '', (13, 24)], [',', ',', 'punctuation', ',', (25, 25)], ['man', 'man', 'person', '339947000', (27, 29)], ['or', '||', 'or', 'or', (30, 31)], ['woman', 'woman', 'person', '224526002', (35, 39)], ['ages between 20 and 40 years', 'ages between 20 and 40 years', 'age', {'age_upper_limit': '40', 'age_lower_limit': '20'}, (40, 67)], [',', ',', 'punctuation', ',', (41, 41)]]
+annotated pclxs list after removing repeating concepts: [['healthy ', 'healthy ', 'no match', '', (0, 7)], ['adult', 'well adult', 'clinical finding', '102512003', (8, 12)], ['volunteers', 'volunteers', 'no match', '', (13, 24)], [',', ',', 'punctuation', ',', (25, 25)], ['man', 'man', 'person', '339947000', (27, 29)], ['or', '||', 'or', 'or', (30, 31)], ['woman', 'woman', 'person', '224526002', (35, 39)], ['ages between 20 and 40 years', 'ages between 20 and 40 years', 'age', {'age_upper_limit': '40', 'age_lower_limit': '20'}, (40, 67)], [',', ',', 'punctuation', ',', (41, 41)]]
+annotated criterion: healthy (no match) adult(clinical finding) volunteers(no match) ,(punctuation) man(person) or(or) woman(person) ages between 20 and 40 years(age) ,(punctuation)
+ (Ey.diagnosed_with(x, y) && well adult(y)) && (ageof(x)>=20 && ageof(x)<=40) && (man(x)||woman(x))
+accuracy: False,Normal,0.78
+
+cws exclusion
+cardiac arrhythmias requiring anti-arrhythmic therapy other than beta blockers or digoxin.
+age information: []
+time information: []
+original mapping information: {'cardiac arrhythmias': {'698247007': ('clinical finding', 'cardiac arrhythmia ', ['118234003', '64572001'])}, 'anti arrhythmic therapy other than beta blockers': {'276239002': ('procedure', 'therapy ', ['243120004', '362961001', '277132007']), '277132007': ('procedure', 'therapeutic procedure ', ['362961001']), '373254001': ('product', 'beta-blocking agent ', ['406455002'])}, 'digoxin': {'387461009': ('product', 'digoxin ', ['372813008', '312413002', '406455002'])}}
+refined mapping information: [['cardiac arrhythmias', 'cardiac arrhythmia', 'clinical finding', '698247007'], ['therapy', 'therapy', 'procedure', '276239002'], ['other', 'therapeutic procedure', 'procedure', '277132007'], ['digoxin', 'digoxin', 'product', '387461009']]
+annotated pclxs list: [['cardiac arrhythmias', 'cardiac arrhythmia', 'clinical finding', '698247007', (0, 18)], ['requiring anti arrhythmic', 'requiring anti arrhythmic', 'no match', '', (19, 46)], ['therapy', 'therapy', 'procedure', '276239002', (47, 53)], ['other than', '!', 'neg', 'other than', (54, 63)], ['beta blocker', 'beta blocker', 'no match', '', (64, 78)], ['or', '||', 'or', 'or', (79, 80)], ['digoxin', 'digoxin', 'product', '387461009', (84, 90)], ['.', '.', 'punctuation', '.', (92, 92)]]
+annotated pclxs list after removing repeating concepts: [['cardiac arrhythmias', 'cardiac arrhythmia', 'clinical finding', '698247007', (0, 18)], ['requiring anti arrhythmic', 'requiring anti arrhythmic', 'no match', '', (19, 46)], ['therapy', 'therapy', 'procedure', '276239002', (47, 53)], ['other than', '!', 'neg', 'other than', (54, 63)], ['beta blocker', 'beta blocker', 'no match', '', (64, 78)], ['or', '||', 'or', 'or', (79, 80)], ['digoxin', 'digoxin', 'product', '387461009', (84, 90)], ['.', '.', 'punctuation', '.', (92, 92)]]
+annotated criterion: cardiac arrhythmias(clinical finding) requiring anti arrhythmic(no match) therapy(procedure) other than(neg) beta blocker(no match) or(or) digoxin(product) .(punctuation)
+ (Ey.diagnosed_with(x, y) && cardiac arrhythmia(y)) && ! (Ey.take(x, y) && digoxin(y))
+accuracy: False,Normal,0.5
+
+cws exclusion
+diabetes mellitus
+age information: []
+time information: []
+original mapping information: {'diabetes mellitus': {'73211009': ('clinical finding', 'diabetes mellitus ', ['118234003', '64572001'])}}
+refined mapping information: [['diabetes mellitus', 'diabetes mellitus', 'clinical finding', '73211009']]
+annotated pclxs list: [['diabetes mellitus', 'diabetes mellitus', 'clinical finding', '73211009', (0, 16)]]
+annotated pclxs list after removing repeating concepts: [['diabetes mellitus', 'diabetes mellitus', 'clinical finding', '73211009', (0, 16)]]
+annotated criterion: diabetes mellitus(clinical finding)
+ (Ey.diagnosed_with(x, y) && diabetes mellitus(y))
+accuracy: False,Normal,1.0
+
+cws exclusion
+a primary active mental illness diagnosis other than schizoaffective disorder
+age information: []
+time information: []
+original mapping information: {'a primary active mental illness diagnosis other than schizoaffective disorder': {'55561003': ('qualifier value', 'active ', ['272099008']), '74732009': ('clinical finding', 'mental disorder ', ['64572001']), '191567000': ('clinical finding', 'schizoaffective schizophrenia ', ['68890003', '64572001', '74732009']), '68890003': ('clinical finding', 'schizoaffective disorder ', ['64572001', '74732009'])}}
+refined mapping information: [['a primary active mental illness diagnosis', 'mental disorder', 'clinical finding', '74732009'], ['schizoaffective disorder', 'schizoaffective disorder', 'clinical finding', '68890003']]
+annotated pclxs list: [['a primary active mental illness diagnosis', 'mental disorder', 'clinical finding', '74732009', (0, 40)], ['other than', '!', 'neg', 'other than', (42, 51)], ['schizoaffective disorder', 'schizoaffective disorder', 'clinical finding', '68890003', (54, 77)]]
+annotated pclxs list after removing repeating concepts: [['a primary active mental illness diagnosis', 'mental disorder', 'clinical finding', '74732009', (0, 40)], ['other than', '!', 'neg', 'other than', (42, 51)], ['schizoaffective disorder', 'schizoaffective disorder', 'clinical finding', '68890003', (54, 77)]]
+annotated criterion: a primary active mental illness diagnosis(clinical finding) other than(neg) schizoaffective disorder(clinical finding)
+Ey.diagnosed_with(x,y) && (mental disorder(y)&&!schizoaffective disorder(y))
+accuracy: False,Normal,1.0
+
+cws exclusion
+too large to fit in the magnet 
+age information: []
+time information: []
+original mapping information: {'too large': {'255509001': ('qualifier value', 'large ', ['272099008'])}, 'to': {'9986007': ('product', 'tryptophanase ', ['115668003', '312413002'])}, 'fit in the magnet': {'91175000': ('clinical finding', 'seizure ', ['102957003', '118234003'])}}
+refined mapping information: [['large', 'large', 'qualifier value', '255509001'], ['fit', 'seizure', 'clinical finding', '91175000']]
+annotated pclxs list: [['too ', 'too ', 'no match', '', (0, 3)], ['large', 'large', 'qualifier value', '255509001', (4, 8)], ['to', 'to', 'no match', '', (9, 13)], ['fit', 'seizure', 'clinical finding', '91175000', (14, 16)], ['  in the magnet ', '  in the magnet ', 'no match', '', (17, 32)]]
+annotated pclxs list after removing repeating concepts: [['too ', 'too ', 'no match', '', (0, 3)], ['large', 'large', 'qualifier value', '255509001', (4, 8)], ['to', 'to', 'no match', '', (9, 13)], ['fit', 'seizure', 'clinical finding', '91175000', (14, 16)], ['  in the magnet ', '  in the magnet ', 'no match', '', (17, 32)]]
+annotated criterion: too (no match) large(qualifier value) to(no match) fit(clinical finding)   in the magnet (no match)
+ (Ey.diagnosed_with(x, y) && seizure(y))
+accuracy: False,Normal,0.67
+
+cws exclusion
+has known hypersensitivity to pembrolizumab and/or epacadostat or any of their excipients
+age information: []
+time information: []
+original mapping information: {'known hypersensitivity to pembrolizumab': {'418634005': ('clinical finding', 'allergic reaction caused by substance ', ['64572001', '473010000', '421961002']), '421961002': ('clinical finding', 'hypersensitivity reaction ', ['64572001', '473010000']), '716125002': ('product', 'pembrolizumab ', ['115668003', '312413002']), '421369008': ('clinical finding', 'emotional hypersensitivity ', ['250171008'])}, 'any of their excipients': {'360215002': ('product', 'pharmaceutical excipient ', ['312412007'])}}
+refined mapping information: [['hypersensitivity', 'hypersensitivity reaction', 'clinical finding', '421961002'], ['pembrolizumab', 'pembrolizumab', 'product', '716125002'], ['excipients', 'pharmaceutical excipient', 'product', '360215002']]
+annotated pclxs list: [['has known ', 'has known ', 'no match', '', (0, 9)], ['hypersensitivity', 'hypersensitivity reaction', 'clinical finding', '421961002', (10, 25)], ['to', 'to', 'no match', '', (26, 30)], ['pembrolizumab', 'pembrolizumab', 'product', '716125002', (31, 43)], ['and', '||', 'or', 'and', (44, 46)], ['or', '||', 'or', 'or', (48, 49)], ['epacadosta', 'epacadosta', 'no match', '', (50, 62)], ['or', '||', 'or', 'or', (63, 64)], ['any of their', 'any of their', 'no match', '', (65, 80)], ['excipients', 'pharmaceutical excipient', 'product', '360215002', (81, 90)]]
+annotated pclxs list after removing repeating concepts: [['has known ', 'has known ', 'no match', '', (0, 9)], ['hypersensitivity', 'hypersensitivity reaction', 'clinical finding', '421961002', (10, 25)], ['to', 'to', 'no match', '', (26, 30)], ['pembrolizumab', 'pembrolizumab', 'product', '716125002', (31, 43)], ['and', '||', 'or', 'and', (44, 46)], ['or', '||', 'or', 'or', (48, 49)], ['epacadosta', 'epacadosta', 'no match', '', (50, 62)], ['or', '||', 'or', 'or', (63, 64)], ['any of their', 'any of their', 'no match', '', (65, 80)], ['excipients', 'pharmaceutical excipient', 'product', '360215002', (81, 90)]]
+annotated criterion: has known (no match) hypersensitivity(clinical finding) to(no match) pembrolizumab(product) and(or) or(or) epacadosta(no match) or(or) any of their(no match) excipients(product)
+ (Ey.diagnosed_with(x, y) && hypersensitivity reaction(y)) || (Ey.take(x, y) && pembrolizumab(y)) ||  (Ey.take(x, y) && pharmaceutical excipient(y))
+accuracy: False,underapproximation,0.6
+
+cws exclusion
+history of solid organ transplantation or collagen vascular disease
+age information: []
+time information: [['history of', ['-inf', 0], 'time', '', (0, 9)]]
+original mapping information: {'solid organ transplantation': {'256885008': ('qualifier value', 'solid organ ', ['272099008']), '263903005': ('qualifier value', 'transplant ', ['272099008']), '77465005': ('procedure', 'transplantation ', ['128927009'])}, 'collagen vascular disease': {'81573002': ('clinical finding', 'collagen disease ', ['118234003', '64572001'])}}
+refined mapping information: [['solid organ transplantation', 'solid organ', 'qualifier value', '256885008'], ['solid organ transplantation', 'transplantation', 'procedure', '77465005'], ['collagen vascular disease', 'collagen disease', 'clinical finding', '81573002']]
+annotated pclxs list: [['history of', ['-inf', 0], 'time', '', (0, 9)], ['solid organ transplantation', 'solid organ', 'qualifier value', '256885008', (11, 37)], ['or', '||', 'or', 'or', (39, 40)], ['collagen vascular disease', 'collagen disease', 'clinical finding', '81573002', (43, 67)]]
+annotated pclxs list after removing repeating concepts: [['history of', ['-inf', 0], 'time', '', (0, 9)], ['solid organ transplantation', 'solid organ', 'qualifier value', '256885008', (11, 37)], ['or', '||', 'or', 'or', (39, 40)], ['collagen vascular disease', 'collagen disease', 'clinical finding', '81573002', (43, 67)]]
+annotated criterion: history of(time) solid organ transplantation(qualifier value) or(or) collagen vascular disease(clinical finding)
+['-inf', 0] (Ey.diagnosed_with(x, y) && collagen disease(y))
+accuracy: False,Normal,1.0
+
+cws exclusion
+facial trauma or burns that might interfere with the esophageal catheter placement
+age information: []
+time information: []
+original mapping information: {'facial trauma': {'125593007': ('clinical finding', 'injury of face ', ['118234003', '64572001'])}, 'burns': {'125666000': ('clinical finding', 'burn ', ['64572001'])}}
+refined mapping information: [['facial', 'injury of face', 'clinical finding', '125593007'], ['burns', 'burn', 'clinical finding', '125666000']]
+annotated pclxs list: [['facial', 'injury of face', 'clinical finding', '125593007', (0, 5)], ['trauma', 'trauma', 'no match', '', (6, 13)], ['or', '||', 'or', 'or', (14, 15)], ['burns', 'burn', 'clinical finding', '125666000', (18, 22)], ['that might interfere with the esophageal catheter placement', 'that might interfere with the esophageal catheter placement', 'sbar', 'that might interfere with the esophageal catheter placement', (23, 81)]]
+annotated pclxs list after removing repeating concepts: [['facial', 'injury of face', 'clinical finding', '125593007', (0, 5)], ['trauma', 'trauma', 'no match', '', (6, 13)], ['or', '||', 'or', 'or', (14, 15)], ['burns', 'burn', 'clinical finding', '125666000', (18, 22)], ['that might interfere with the esophageal catheter placement', 'that might interfere with the esophageal catheter placement', 'sbar', 'that might interfere with the esophageal catheter placement', (23, 81)]]
+annotated criterion: facial(clinical finding) trauma(no match) or(or) burns(clinical finding) that might interfere with the esophageal catheter placement(sbar)
+ (Ey.diagnosed_with(x, y) && (injury of face(y)||burn(y)))
+accuracy: True,Normal,0.88
+
+ (Ey.diagnosed_with(x, y) && well adult(y)) && (ageof(x)>=20 && ageof(x)<=40) && (man(x)||woman(x)) &&  (Ey.diagnosed_with(x, y) && cardiac arrhythmia(y)) && ! (Ey.take(x, y) && digoxin(y)) &&  (Ey.diagnosed_with(x, y) && diabetes mellitus(y)) && Ey.diagnosed_with(x,y) && (mental disorder(y)&&!schizoaffective disorder(y)) &&  (Ey.diagnosed_with(x, y) && seizure(y)) &&  (Ey.diagnosed_with(x, y) && hypersensitivity reaction(y)) || (Ey.take(x, y) && pembrolizumab(y)) ||  (Ey.take(x, y) && pharmaceutical excipient(y)) && ['-inf', 0] (Ey.diagnosed_with(x, y) && collagen disease(y)) &&  (Ey.diagnosed_with(x, y) && (injury of face(y)||burn(y)))
+

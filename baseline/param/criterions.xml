@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<studies>
+  <study>
+    <criteria>
+      <criterion type="exclusion" id="3420">
+        <text>- Cardiac arrhythmias requiring anti-arrhythmic therapy other than beta blockers or digoxin.</text>
+        <comments>
+        </comments>
+        <tags>
+          <tag>rand1</tag>
+          <tag>not taggable</tag>
+          <tag>not answerable</tag>
+          <tag>exclusion</tag>
+        </tags>
+      </criterion>
+      <criterion type="exclusion" id="6941">
+        <text>- diabetes mellitus</text>
+        <comments>
+        </comments>
+        <tags>
+          <tag>rand1</tag>
+          <tag>not taggable</tag>
+          <tag>not answerable</tag>
+          <tag>exclusion</tag>
+        </tags>
+      </criterion>
+      <criterion type="exclusion" id="13702">
+        <text>- A primary active mental illness diagnosis other than schizoaffective disorder</text>
+        <comments>
+        </comments>
+        <tags>
+          <tag>rand1</tag>
+          <tag>not taggable</tag>
+          <tag>not answerable</tag>
+          <tag>exclusion</tag>
+        </tags>
+      </criterion>
+      <criterion type="inclusion" id="14640">
+        <text>- Platelet count ≥ 100 x 109/L (&gt;100,000 per mm3)</text>
+        <comments>
+        </comments>
+        <tags>
+          <tag>rand1</tag>
+          <tag>not taggable</tag>
+          <tag>not answerable</tag>
+          <tag>inclusion</tag>
+        </tags>
+      </criterion>
+      <criterion type="exclusion" id="22403">
+        <text>- Too large to fit in the magnet (BMI &gt;= 40, approx.)</text>
+        <comments>
+        </comments>
+        <tags>
+          <tag>rand1</tag>
+          <tag>not taggable</tag>
+          <tag>not answerable</tag>
+          <tag>exclusion</tag>
+        </tags>
+      </criterion>
+      <criterion type="exclusion" id="24263">
+        <text>- Has known hypersensitivity to pembrolizumab and/or epacadostat or any of their excipients</text>
+        <comments>
+        </comments>
+        <tags>
+          <tag>rand1</tag>
+          <tag>not taggable</tag>
+          <tag>not answerable</tag>
+          <tag>exclusion</tag>
+        </tags>
+      </criterion>
+      <criterion type="exclusion" id="29709">
+        <text>- History of solid organ transplantation or collagen vascular disease</text>
+        <comments>
+        </comments>
+        <tags>
+          <tag>rand1</tag>
+          <tag>not taggable</tag>
+          <tag>not answerable</tag>
+          <tag>exclusion</tag>
+        </tags>
+      </criterion>
+      <criterion type="inclusion" id="33570">
+        <text>- at least one prescription claim for any medication in the pre- and post-index period (proxy for continuous enrollment)</text>
+        <comments>
+        </comments>
+        <tags>
+          <tag>rand1</tag>
+          <tag>not taggable</tag>
+          <tag>not answerable</tag>
+          <tag>inclusion</tag>
+        </tags>
+      </criterion>
+      <criterion type="inclusion" id="39119">
+        <text>- Healthy adult volunteers, male or female, ages between 20 and 40 years</text>
+        <comments>
+        </comments>
+        <tags>
+          <tag>rand1</tag>
+          <tag>not taggable</tag>
+          <tag>not answerable</tag>
+          <tag>inclusion</tag>
+        </tags>
+      </criterion>
+      <criterion type="exclusion" id="39217">
+        <text>- facial trauma or burns that might interfere with the esophageal catheter placement</text>
+        <comments>
+        </comments>
+        <tags>
+          <tag>rand1</tag>
+          <tag>not taggable</tag>
+          <tag>not answerable</tag>
+          <tag>exclusion</tag>
+        </tags>
+      </criterion>
+     </criteria>
+  </study>
+</studies>
