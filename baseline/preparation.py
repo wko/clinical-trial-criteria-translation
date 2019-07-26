@@ -6,6 +6,7 @@
 #       Function: arrange the criteria, get the mapping by using metamap tagger
 ##############################################################################
 from criteria2labeled import *
+from crosswalk import crosswalk
 import nltk
 nltk.download('punkt')
 import yaml
@@ -16,6 +17,7 @@ from nltk.parse import stanford
 from nltk.parse.corenlp import CoreNLPParser
 from nltk.tag.stanford import StanfordPOSTagger
 from nltk import word_tokenize, pos_tag, sent_tokenize, Tree
+import json
 
 def reverse_word(word):
     reverse_word = word[::-1]
@@ -121,7 +123,7 @@ def get_all_mappings_from_json(criterion, mapping_json):
 
 
 def get_mapping_from_criterion(criterion):
-    headers = {'Accept': 'application/json'}
+    headers = {'Accept': 'application/xml'}
     #handle the percent sign '%'
     criterion = criterion.replace("%", "%25")
     str_criterion = ""
@@ -130,14 +132,41 @@ def get_mapping_from_criterion(criterion):
         str_criterion = str_criterion + '+' + item
     str_criterion.replace('\n', '')
     #print('http://localhost:3000/concepts?&search='+str_criteria[1:])
-    print(os.environ['MIMIC_BROWSER']+'/concepts/search.json?search='+str_criterion[1:])
-    mapping = requests.get(os.environ['MIMIC_BROWSER']+ '/concepts/search.json?search='+str_criterion[1:])
+    #print(os.environ['MIMIC_BROWSER']+'/concepts/search.json?search='+str_criterion[1:])
+    #mapping = requests.get(os.environ['MIMIC_BROWSER']+ '/concepts/search.json?search='+str_criterion[1:])
 
     #another method to request
-    #data = {"data": criterion}
-    #mapping = requests.post('http://141.76.60.253:80/meatmaphuman', headers=headers, data = data)
-    #print(mapping.text)
-    return mapping.text
+    data = {"data": criterion}
+    mapping = requests.post(f"{os.environ['METAMAP_WEB_URL']}metamap", headers=headers, data = data)
+    
+    
+    # Process xml result 
+    
+    import xml.etree.ElementTree as ET
+    import re
+    
+    
+    xml = re.sub(' xmlns="[^"]+"', '', mapping.text, count=1)
+    #print(xml) 
+    root = ET.fromstring(xml) 
+    r = []
+    for phrase in root.findall(".//Phrase"):
+        ptext = phrase.find('PhraseText').text.lower()
+        cs = []
+        for candidate in phrase.findall("Mappings/Mapping/MappingCandidates/Candidate"): 
+           cui = candidate.find('CandidateCUI').text
+           clabel = candidate.find('CandidatePreferred').text 
+           for snomedid in crosswalk(cui): 
+               tmp = {"cui": cui, "snomedid": snomedid, "concept": clabel}
+               cs.append(tmp)
+        # Remove dublicates
+        #cs = list(dict.fromkeys(cs))
+        if len(cs) > 0: 
+            r.append({"phrase": ptext, "candidates": cs})
+    #r = list(dict.fromkeys(r))
+    #print(json.dumps(r))
+    return json.dumps(r)
+    
 
 '''
 #Example
@@ -155,11 +184,11 @@ new_mapping_dict = remove_redundant_concepts(new_mapping_dict)
 print('after removing redundant concepts: ', new_mapping_dict)
 '''
 
-def write_concept_recognition_into_file():
-    mapping_output = open('param/mapping_output', 'w')
+def write_concept_recognition_into_file(input, outdir):
+    mapping_output = open(f"{outdir}/mapping_output", 'w')
     #all_criteria_dict = load_criteria_into_dict('param/criteria')
     start_time = time.time()
-    all_criteria_dict = load_criteria_into_dict_from_xml('param/criterions.xml')
+    all_criteria_dict = load_criteria_into_dict_from_xml(input)
     #print(all_criteria_dict)
     print("--- %s seconds ---" % (time.time() - start_time))
     for clinical_trial_id, inex_criteria in all_criteria_dict.items():
@@ -203,10 +232,10 @@ def write_concept_recognition_into_file():
 
     mapping_output.close()
 
-def get_criterion_from_id(id):
+def get_criterion_from_id(id, input):
     #xml_file = open(file_name, 'r')
     text = ""
-    xmldoc = minidom.parse('param/criterions.xml')
+    xmldoc = minidom.parse(input)
     criteria_list = xmldoc.getElementsByTagName('criterion')
     for criterion in criteria_list:
         if id == criterion.attributes['id'].value:
@@ -217,8 +246,8 @@ def get_criterion_from_id(id):
             text = pre_process_criterion(text)
     return text
 
-def get_corresponding_concepts_for_one_criterion(id):
-    criterion = get_criterion_from_id(id)
+def get_corresponding_concepts_for_one_criterion(id, input):
+    criterion = get_criterion_from_id(id, input)
     #criterion = 'a criterion current or ex-smokers with smoking history of >= 10 pack-years'
     if re.match(r'^(\d+).', criterion) or re.match(r'^(\s)*-', criterion):
         text = re.sub(r'^(\d)*.', '', criterion, 1)
@@ -257,8 +286,34 @@ def get_corresponding_concepts_for_one_criterion(id):
 #get_corresponding_concepts_for_one_criterion('3284100')
 #get_corresponding_concepts_for_one_criterion('1115412')
 if __name__ == '__main__':
-    a = 0
-    write_concept_recognition_into_file()
+    
+    import os 
+    import os.path
+    import sys
+    import requests
+    import logging
+    import argparse
+
+    def is_valid_file(parser, arg):
+        if not os.path.exists(arg):
+            parser.error("The file %s does not exist!" % arg)
+        else:
+            return arg 
+
+    def is_valid_directory(parser, arg):
+        if not os.path.isdir(arg):
+            parser.error("The directory %s does not exist!" % arg)
+        else:
+            return arg
+
+
+    parser = argparse.ArgumentParser(description='Run baseline.py')
+    parser.add_argument("-i", type=lambda x: is_valid_file(parser, x), help="the input file", )
+    parser.add_argument("-o", type=lambda x: is_valid_directory(parser, x), help="the output directory")
+
+    args = parser.parse_args()
+    
+    write_concept_recognition_into_file(args.i, args.o)
     '''
     a = 'current or ex-smokers with a smoking history of >= 10 pack-years'
     criterion_list = sent_tokenize(a)

@@ -35,9 +35,10 @@ def get_all_superclasses(snomedid):
     headers = {'Accept': 'application/json'}
     snomedid = 'http://snomed.info/id/' + str(snomedid)
     data = {"command":"getSuperClasses","data": snomedid}
-    print(f"getting superclasses")
+    
     
     superclasses = requests.post(os.environ['REASONER_DOCKER_URL'], data = data)
+    
     superclasses_list= yaml.safe_load(superclasses.text)
     superclasses_id_list = [x.strip().replace("http://snomed.info/id/", "") for x in superclasses_list]
 

@@ -6,10 +6,11 @@ This repositiory contains the evaluation code for the paper "Automatic Translati
 
 To obtain snomed and metamap you need to apply for an UMLS license (https://utslogin.nlm.nih.gov/cas/login)
 
-# Requirements 
+# Prerequisites 
 
+Clone this repository, then install and download the following services and files:
 
-1. Docker - Make sure the memory and swap limits for docker are at least 8GB. 
+1. Docker - Make sure the memory limits for docker are at least 8GB. 
 2. Metamap Web Server (https://github.com/wko/metamap-web)
 3. ELK Web Reasoner (https://github.com/wko/elk-web-reasoner)
 4. Snomed CT Ontology in OWL Functional Format (snomed.ofn) see https://www.nlm.nih.gov/healthit/snomedct/international.html and https://github.com/IHTSDO/snomed-owl-toolkit 
@@ -24,14 +25,26 @@ To obtain snomed and metamap you need to apply for an UMLS license (https://utsl
 3. execute `python preparation.py` and `python baseline.py`
 4. The output can be found in `baseline/output/formal_queries.xml`
 
-## Tips:
-The running of baseline.py is independent of preparation.py, the main function of preparation.py is to get the output of metamap tagger.
+## Reproducing the paper data 
 
-Before running it, please keep the file "mapping_out" in the param directory.
+The data in the paper were produced using the following versions of the programs and data: 
 
-# Project Structure
+* MetaMap Version 2016v2 with the public_mm_data_usabase_2018aa_relaxed vocabulary 
+* Stanford Core NLP version 3.9.2
+* ELK Reasoner 0.4.3 with SNOMED CT US Version 2017-01-31
+* Word2Vec Wikipedia Model from https://fasttext.cc/docs/en/pretrained-vectors.html
 
-## The list of program files：
+
+# Test Data 
+The list of paper data files: the input and output files of the test in our paper
+
+1. input files: criterions.xml
+2. output files: mapping_output, formal.txt, log.txt, formal_queries.xml
+
+
+## Project Structure
+
+### The list of program files：
 
 1. preparation.py: preprocessing of input eligibility criterion
 2. criteria2label.py: get the semantic representation of eligibility criterion
@@ -43,7 +56,7 @@ Before running it, please keep the file "mapping_out" in the param directory.
 8. baseline.py: batch process the eligibility criteria and get the formal queries.
 
 
-## The list of parameter files: in the param directory
+### The list of parameter files: in the param directory
 
 1. age_pattern: regular expressions used to recognize age expressions
 2. time_pattern: regular expressions used to recognize temporal expressions
@@ -53,23 +66,9 @@ Before running it, please keep the file "mapping_out" in the param directory.
 6. criterions.xml: The input file including eligibility criterion
 
 
-## The list of output files: in the output directory
+### The list of output files: in the output directory
 
 1. formal_text: : output the criteria, semantic representation, and final formal query.
 2. log.txt: output more detailed information including age expressions, time expressions,
 metamap tagger output, refined matamap tagger output, and semantic representation
 3. formal_queries.xml: the final output of our program.
-
-
-# Test Data 
-The list of paper data files: the input and output files of the test in our paper
-
-1. input files: criterions.xml
-2. output files: mapping_output, formal.txt, log.txt, formal_queries.xml
-
- 
-The configuration of web service:
-
-1. metamap tagger service：get the output of metamap tagger
-2. superclasses service: get all superclasses of concept
-3. synset service: get synset of concept

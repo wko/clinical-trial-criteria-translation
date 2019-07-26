@@ -9,12 +9,11 @@ services:
   elk-web:
     build: https://github.com/wko/elk-web-reasoner.git
     volumes:
-      - ./data/snomed.ofn:/root/data/ontologies/snomed.ofn
-      - ~/.ivy2/local:/root/.ivy2/local
+      - ./data/ontologies/snomed.ofn:/root/data/snomed.ofn
     ports:
       - "8080:8080"
     environment:
-      - ONTOLOGY_PATH=/root/data/ontologies/snomed.ofn
+      - ONTOLOGY_PATH=/root/data/snomed.ofn
       - _JAVA_OPTIONS=-Xmx4g -XX:-UseGCOverheadLimit
       - DB_USER=postgres 
       - DB_PASSWORD=
@@ -27,13 +26,12 @@ services:
     command: java -mx3g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000 -timeout 15000 -preload tokenize,ssplit,pos,depparse
     ports:
       - "9000:9000"
-    restart: always
-    
-  #metamap:
-  #  image: metamap 
-  #  #command: /root/bin/run.sh
-  #  ports:
-  #    - "80:80"  
+    restart: always  
+  metamap:
+    image: metamap 
+    #command: /root/bin/run.sh
+    #ports:
+    #  - "80:80"  
   translator:
     build: .
     volumes:
@@ -42,10 +40,11 @@ services:
     command: tail -f /dev/null
     environment:
       - STANFORD_NLP_TOOLS=http://stanford_nlp:9000/
-      - REASONER_DOCKER_URL=http://host.docker.internal:8080/
+      - REASONER_DOCKER_URL=http://elk-web:8080/
+      - METAMAP_WEB_URL=http://metamap:80/
     depends_on:
-      - elk
+      - elk-web
       - stanford_nlp
-    #  - metamap
+      - metamap
       
       

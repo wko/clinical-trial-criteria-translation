@@ -9,9 +9,33 @@
 
 
 import os 
+import os.path
 import sys
 import requests
 import logging
+import argparse
+
+def is_valid_file(parser, arg):
+    if not os.path.exists(arg):
+        parser.error("The file %s does not exist!" % arg)
+    else:
+        return arg 
+
+def is_valid_directory(parser, arg):
+    if not os.path.isdir(arg):
+        parser.error("The directory %s does not exist!" % arg)
+    else:
+        return arg
+
+
+parser = argparse.ArgumentParser(description='Run baseline.py')
+parser.add_argument("-i", type=lambda x: is_valid_file(parser, x), help="the input file", )
+parser.add_argument("-o", type=lambda x: is_valid_directory(parser, x), help="the output directory")
+parser.add_argument("--preparation", action="store_true", help="run the preparation script, too.")
+
+args = parser.parse_args()
+
+
 
 logging.basicConfig(level=logging.INFO)
 
@@ -50,11 +74,15 @@ def befor_output_final_query(formal_query):
     return formal_query
 
 
+if args.preparation: 
+    from preparation import write_concept_recognition_into_file
+    logging.info("Running the preparation scrit")
+    write_concept_recognition_into_file(args.i, args.o)
 
-#all_criteria_dict = load_criteria_into_dict('param/criteria')
-all_criteria_dict = load_criteria_into_dict_from_xml('param/criterions.xml')
-file_log = open("output/log.txt", "w")
-file_formal = open("output/formal.txt", "w")
+
+all_criteria_dict = load_criteria_into_dict_from_xml(args.i)
+file_log = open(f"{args.o}/log.txt", "w")
+file_formal = open(f"{args.o}/formal.txt", "w")
 start_time = time.time()
 logging.info(f"Loading Word2Vec model...")
 model = KeyedVectors.load_word2vec_format('../data/wiki.en.vec')
@@ -117,7 +145,7 @@ for key, value in all_criteria_dict.items():
             file_log.write('time information: '+str(time_pclp_list)+"\n")
 
             #recognize the concept in the criterion
-            mapping_dict = get_mapping_from_file(id, 'param/mapping_output')
+            mapping_dict = get_mapping_from_file(id, f"{args.o}/mapping_output")
             file_log.write('original mapping information: '+str(mapping_dict)+"\n")
 
             #refine the concept mapping
@@ -186,7 +214,7 @@ for key, value in all_criteria_dict.items():
 file_log.close()
 file_formal.close()
 
-filename = "output/formal_queries.xml"
+filename = f"{args.o}/formal_queries.xml"
 f = open(filename, "w")
 f.write(doc.toprettyxml(indent="  "))
 f.close()

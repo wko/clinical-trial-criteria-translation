@@ -2,7 +2,8 @@
 .DS_Store
 results
 data/*
-
+tmp/db/*
+baseline/output
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
