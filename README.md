@@ -22,7 +22,7 @@ Clone this repository, then install and download the following services and file
 
 1. `docker-compose up`
 2. in an other terminal enter: `docker-compose exec translator bash` and execute 
-3. execute `python preparation.py` and `python baseline.py`
+3. execute `python baseline.py -i paper\ data/paper_criterions_short.xml -o output --preparation`
 4. The output can be found in `baseline/output/formal_queries.xml`
 
 ## Reproducing the paper data 
