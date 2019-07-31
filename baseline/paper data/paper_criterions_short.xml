@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<studies>
+  <study>
+    <criteria count="1000">
+      <criterion type="exclusion" id="3420" nct="NCT01258608">
+        <text>- Cardiac arrhythmias requiring anti-arrhythmic therapy other than beta blockers or digoxin.</text>
+        <comments>
+        </comments>
+        <votes>
+        </votes>
+        <translation_votes translator="Chao@final version 0601">
+          <translation_vote>
+            <vote>
+              <user_id>2</user_id>
+              <quality>1</quality>
+            </vote>
+          </translation_vote>
+        </translation_votes>
+        <tags>
+          <tag>rand1</tag>
+          <tag>not taggable</tag>
+          <tag>exclusion</tag>
+        </tags>
+      </criterion>
+      <criterion type="exclusion" id="6941" nct="NCT01257009">
+        <text>- diabetes mellitus</text>
+        <comments>
+        </comments>
+        <votes>
+        </votes>
+        <translation_votes translator="Chao@final version 0601">
+          <translation_vote>
+            <vote>
+              <user_id>2</user_id>
+              <quality>2</quality>
+            </vote>
+          </translation_vote>
+        </translation_votes>
+        <tags>
+          <tag>rand1</tag>
+          <tag>not taggable</tag>
+          <tag>exclusion</tag>
+        </tags>
+      </criterion>
+    </criteria>
+  </study>
+</studies>
