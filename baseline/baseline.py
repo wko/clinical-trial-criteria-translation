@@ -50,10 +50,20 @@ def server_is_up(hostname):
     return True 
    
     
+required_services = [ 'STANFORD_NLP_TOOLS', 
+                      'REASONER_DOCKER_URL', 
+                      'WORD2VEC']    
 
-if not server_is_up(os.environ['STANFORD_NLP_TOOLS']) or not server_is_up(os.environ['REASONER_DOCKER_URL']):
-    logging.error(f"Make sure the stanford_nlp server and ELK Web Server are up.")
+requirements_met = True
+for service in required_services: 
+    if not server_is_up(os.environ[service]): 
+        logging.error(f"{service} is not up or environment variable is set incorrectly. Make sure it is avalailable and try again.")
+        requirements_met = False
+if not requirements_met:
     sys.exit()
+
+
+    
     
 
 from criteria2labeled import *
@@ -83,124 +93,112 @@ if args.preparation:
 all_criteria_dict = load_criteria_into_dict_from_xml(args.i)
 file_log = open(f"{args.o}/log.txt", "w")
 file_formal = open(f"{args.o}/formal.txt", "w")
-start_time = time.time()
-logging.info(f"Loading Word2Vec model...")
-model = KeyedVectors.load_word2vec_format('../data/wiki.en.vec')
-logging.info(f"Done in --- {time.time() - start_time} seconds ---")
 
 
-doc = Document()
-root = doc.createElement("studies")
-doc.appendChild(root)
+doc = minidom.parse(args.i)
 
-for key, value in all_criteria_dict.items():
-    study = doc.createElement("study")
-    root.appendChild(study)
-    study.setAttribute('id', key)
-    criteria_node = doc.createElement("criteria")
-    study.appendChild(criteria_node)
-
+for study_node in doc.getElementsByTagName('study'): 
+    study_id = study_node.getAttribute('id')
+    if not study_id: 
+        study_id = 'cws'
+    
+    study_dict = all_criteria_dict.get(study_id)
+    
+    
     final_formal_expr = ""
-    file_formal.write(key+"\n")
+    file_formal.write(study_id+"\n")
     formal_query_list = []
-    for in_ex, criteria in value.items():
-        for id, criterion in criteria:
+    criteria_dict = dict(study_dict.get('inclusion') + study_dict.get('exclusion'))
+    for criterion_node in study_node.getElementsByTagName('criterion'):
+        type = criterion_node.getAttribute('type')
+        criterion = criterion_node.getElementsByTagName('text')[0].firstChild.data
+        print(criterion)
+        file_log.write(study_id+" "+type+"\n")
+        file_log.write(criterion+"\n")
+        file_formal.write(criterion+"\n")
 
-            criterion_node = doc.createElement("criterion")
-            criteria_node.appendChild(criterion_node)
-            criterion_node.setAttribute('type', in_ex)
-            criterion_node.setAttribute('id', id)
-            text_node = doc.createElement("text")
-            criterion_node.appendChild(text_node)
-            criterion_text = doc.createTextNode(criterion)
-            text_node.appendChild(criterion_text)
+        usefulness_flag = 'True'
+        detect_result, reason = detect_useless_and_awkward_criteria(criterion)
+        if detect_result != False:
+            file_log.write('useless or awkward criterion: '+detect_result+"\n")
+            file_formal.write('useless or awkward criterion: '+detect_result+"\n")
+            usefulness_flag = 'False'
 
-            file_log.write(key+" "+in_ex+"\n")
-            file_log.write(criterion+"\n")
-            file_formal.write(criterion+"\n")
+        usefulness_node = doc.createElement("usefulness")
+        criterion_node.appendChild(usefulness_node)
+        usefulness_text = doc.createTextNode(usefulness_flag)
+        usefulness_node.appendChild(usefulness_text)
 
-            usefulness_flag = 'True'
-            detect_result, reason = detect_useless_and_awkward_criteria(criterion)
-            if detect_result != False:
-                file_log.write('useless or awkward criterion: '+detect_result+"\n")
-                file_formal.write('useless or awkward criterion: '+detect_result+"\n")
-                usefulness_flag = 'False'
+        usefulness_node = doc.createElement("reason")
+        criterion_node.appendChild(usefulness_node)
+        usefulness_text = doc.createTextNode(reason)
+        usefulness_node.appendChild(usefulness_text)
 
-            usefulness_node = doc.createElement("usefulness")
-            criterion_node.appendChild(usefulness_node)
-            usefulness_text = doc.createTextNode(usefulness_flag)
-            usefulness_node.appendChild(usefulness_text)
+        #recognize age information
+        temp, age_pclp_list = age_construction_recognize(criterion)
+        file_log.write('age information: '+str(age_pclp_list)+"\n")
 
-            usefulness_node = doc.createElement("reason")
-            criterion_node.appendChild(usefulness_node)
-            usefulness_text = doc.createTextNode(reason)
-            usefulness_node.appendChild(usefulness_text)
+        #recognize time information
+        time_pclp_list = time_construction_recognize(criterion)
+        file_log.write('time information: '+str(time_pclp_list)+"\n")
 
-            #recognize age information
-            temp, age_pclp_list = age_construction_recognize(criterion)
-            file_log.write('age information: '+str(age_pclp_list)+"\n")
+        #recognize the concept in the criterion
+        mapping_dict = get_mapping_from_file(id, f"{args.o}/mapping_output")
+        file_log.write('original mapping information: '+str(mapping_dict)+"\n")
 
-            #recognize time information
-            time_pclp_list = time_construction_recognize(criterion)
-            file_log.write('time information: '+str(time_pclp_list)+"\n")
-
-            #recognize the concept in the criterion
-            mapping_dict = get_mapping_from_file(id, f"{args.o}/mapping_output")
-            file_log.write('original mapping information: '+str(mapping_dict)+"\n")
-
-            #refine the concept mapping
-            pcidsuper_list = get_best_match_between_phrase_and_concept(model, mapping_dict)
-            if pcidsuper_list == 0:
-                pcidsuper_list = "can not get synset, returned status code is not 200"
-                file_log.write('refined mapping information: '+str(pcidsuper_list)+"\n")
-                break
+        #refine the concept mapping
+        pcidsuper_list = get_best_match_between_phrase_and_concept(mapping_dict)
+        if pcidsuper_list == 0:
+            pcidsuper_list = "can not get synset, returned status code is not 200"
             file_log.write('refined mapping information: '+str(pcidsuper_list)+"\n")
+            break
+        file_log.write('refined mapping information: '+str(pcidsuper_list)+"\n")
 
 
-            #get the list of phrases with [phrase, concept, label, xxx, span]
-            annotated_pclxs_list = annotate_criterion_with_semantic_label(criterion, pcidsuper_list, age_pclp_list, time_pclp_list)
-            file_log.write('annotated pclxs list: '+str(annotated_pclxs_list)+"\n")
-            annotated_pclxs_list = remove_repeating_concept_from_pclxs_list(annotated_pclxs_list)
-            file_log.write('annotated pclxs list after removing repeating concepts: '+str(annotated_pclxs_list)+"\n")
+        #get the list of phrases with [phrase, concept, label, xxx, span]
+        annotated_pclxs_list = annotate_criterion_with_semantic_label(criterion, pcidsuper_list, age_pclp_list, time_pclp_list)
+        file_log.write('annotated pclxs list: '+str(annotated_pclxs_list)+"\n")
+        annotated_pclxs_list = remove_repeating_concept_from_pclxs_list(annotated_pclxs_list)
+        file_log.write('annotated pclxs list after removing repeating concepts: '+str(annotated_pclxs_list)+"\n")
 
-            #annotate the criterion with the semantic label
-            criterion_with_label = get_criterion_with_semantic_label(annotated_pclxs_list)
-            file_log.write('annotated criterion: '+criterion_with_label+"\n")
-            file_formal.write(criterion_with_label+"\n")
+        #annotate the criterion with the semantic label
+        criterion_with_label = get_criterion_with_semantic_label(annotated_pclxs_list)
+        file_log.write('annotated criterion: '+criterion_with_label+"\n")
+        file_formal.write(criterion_with_label+"\n")
 
-            enriched_text_node = doc.createElement("enriched-text")
-            criterion_node.appendChild(enriched_text_node)
-            criterion_enriched = doc.createTextNode(criterion_with_label)
-            enriched_text_node.appendChild(criterion_enriched)
+        enriched_text_node = doc.createElement("enriched-text")
+        criterion_node.appendChild(enriched_text_node)
+        criterion_enriched = doc.createTextNode(criterion_with_label)
+        enriched_text_node.appendChild(criterion_enriched)
 
-            #get the formal query
-            formal_query = get_formal_query_from_annotated_phrases_list(in_ex, annotated_pclxs_list)
-            formal_query = befor_output_final_query(formal_query)
-            file_log.write(formal_query+"\n")
-            file_formal.write(formal_query+"\n\n")
-            formal_query_list.append(formal_query)
+        #get the formal query
+        formal_query = get_formal_query_from_annotated_phrases_list(type, annotated_pclxs_list)
+        formal_query = befor_output_final_query(formal_query)
+        file_log.write(formal_query+"\n")
+        file_formal.write(formal_query+"\n\n")
+        formal_query_list.append(formal_query)
 
-            criterion_query_node = doc.createElement("query")
-            criterion_node.appendChild(criterion_query_node)
-            query_text = doc.createTextNode(formal_query)
-            criterion_query_node.appendChild(query_text)
+        criterion_query_node = doc.createElement("query")
+        criterion_node.appendChild(criterion_query_node)
+        query_text = doc.createTextNode(formal_query)
+        criterion_query_node.appendChild(query_text)
 
-            sbar_flag, pattern_flag, ratio = evaluate_translation(criterion, annotated_pclxs_list)
-            file_log.write('accuracy: '+sbar_flag+','+pattern_flag+','+str(ratio)+"\n\n")
-            contains_a_that_clause_node = doc.createElement("contains_a_that_clause")
-            criterion_node.appendChild(contains_a_that_clause_node)
-            contains_a_that_clause_text = doc.createTextNode(str(sbar_flag))
-            contains_a_that_clause_node.appendChild(contains_a_that_clause_text)
+        sbar_flag, pattern_flag, ratio = evaluate_translation(criterion, annotated_pclxs_list)
+        file_log.write('accuracy: '+sbar_flag+','+pattern_flag+','+str(ratio)+"\n\n")
+        contains_a_that_clause_node = doc.createElement("contains_a_that_clause")
+        criterion_node.appendChild(contains_a_that_clause_node)
+        contains_a_that_clause_text = doc.createTextNode(str(sbar_flag))
+        contains_a_that_clause_node.appendChild(contains_a_that_clause_text)
 
-            approximation_type_node = doc.createElement("approximation_type")
-            criterion_node.appendChild(approximation_type_node)
-            approximation_type_text = doc.createTextNode(str(pattern_flag))
-            approximation_type_node.appendChild(approximation_type_text)
+        approximation_type_node = doc.createElement("approximation_type")
+        criterion_node.appendChild(approximation_type_node)
+        approximation_type_text = doc.createTextNode(str(pattern_flag))
+        approximation_type_node.appendChild(approximation_type_text)
 
-            percent_translated_node = doc.createElement("percent_translated")
-            criterion_node.appendChild(percent_translated_node)
-            ratio_text = doc.createTextNode(str(ratio))
-            percent_translated_node.appendChild(ratio_text)
+        percent_translated_node = doc.createElement("percent_translated")
+        criterion_node.appendChild(percent_translated_node)
+        ratio_text = doc.createTextNode(str(ratio))
+        percent_translated_node.appendChild(ratio_text)
 
     for item in formal_query_list:
         if final_formal_expr == "":
@@ -215,6 +213,8 @@ file_log.close()
 file_formal.close()
 
 filename = f"{args.o}/formal_queries.xml"
+print(f"Saving XML output to {filename}..")
 f = open(filename, "w")
 f.write(doc.toprettyxml(indent="  "))
 f.close()
+print("Done.")

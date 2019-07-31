@@ -15,4 +15,6 @@ RUN pip install python-Levenshtein
 RUN pip install requests
 RUN pip install gensim
 RUN pip install word2number number2words
+RUN pip install CherryPy
+CMD ["python", "w2v_server.py", "w2v.conf"]
 #CMD [ "python", "baseline.py" ]

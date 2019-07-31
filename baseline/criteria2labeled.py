@@ -551,7 +551,7 @@ def remove_comma_at_start_end_pos(phrase):
         phrase = re.sub(',', '', phrase, 1).strip()
     return phrase
 
-def get_best_match_between_phrase_and_concept(model, mapping_dict):
+def get_best_match_between_phrase_and_concept(mapping_dict):
     if get_synset_of_concept('237622006') == 0:
         return 0
     phrase_concept_snomedid_superclassed_list = []
@@ -619,7 +619,7 @@ def get_best_match_between_phrase_and_concept(model, mapping_dict):
                         temp_list.append(ration)
                     else:
                         temp_list.append(0.4)
-                    temp_list.append(compute_similarity_word2vec(model, word, expr))
+                    temp_list.append(compute_similarity_word2vec(word, expr))
                 if len(temp_list) != 0:
                     score_list.append((max(temp_list), label, index, pos))
             #max_score = max(score_list)
@@ -657,7 +657,7 @@ def get_best_match_between_phrase_and_concept(model, mapping_dict):
                         temp_list.append(ration)
                     else:
                         temp_list.append(0.4)
-                    temp_list.append(compute_similarity_word2vec(model, phrase, expr))
+                    temp_list.append(compute_similarity_word2vec(phrase, expr))
                 if len(temp_list) != 0:
                     score_list.append((max(temp_list), label, index, ''))
             #max_score = max(score_list)
@@ -1122,8 +1122,7 @@ if __name__ == '__main__':
         if len(value) != 0:
             mapping_dict[key] = value
     print('mapping_dict', mapping_dict)
-    model = KeyedVectors.load_word2vec_format('/word2vec/wiki.en.vec')
-    pcidsuper_list = get_best_match_between_phrase_and_concept(model, mapping_dict)
+    pcidsuper_list = get_best_match_between_phrase_and_concept(mapping_dict)
     print(pcidsuper_list)
     phrase_label_dict = annotate_criterion_with_semantic_label(criterion,pcidsuper_list, age_pclp_list, time_pclp_list)
     print(phrase_label_dict) #{'current': 'qualifier value', 'alcohol dependence': 'disorder'}

@@ -32,8 +32,18 @@ services:
     #command: /root/bin/run.sh
     #ports:
     #  - "80:80"  
+  word2vec: 
+    build: https://github.com/wko/word2vec-server.git
+    volumes:
+      - ./data/wiki.en.vec:/root/data/wiki.en.vec
+    ports:
+      - "5000:5000"
+    environment:
+      - MODEL_PATH=/root/data/wiki.en.vec
   translator:
     build: .
+    ports: 
+      - "8889:8889"
     volumes:
       - ./baseline:/myapp
       - ./data:/data
@@ -42,9 +52,11 @@ services:
       - STANFORD_NLP_TOOLS=http://stanford_nlp:9000/
       - REASONER_DOCKER_URL=http://elk-web:8080/
       - METAMAP_WEB_URL=http://metamap:80/
+      - WORD2VEC=http://word2vec:5000/
     depends_on:
       - elk-web
       - stanford_nlp
       - metamap
+      - word2vec
       
       
